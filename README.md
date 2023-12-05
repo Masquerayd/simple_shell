@@ -68,4 +68,60 @@ int main( int ac, char ** av)
 ## Read line
 when working with shell a program sometimes needs an input from the user inorder to determine a desired outcome , this can be implemented with the use of `getline()`(check `man 3 getline`).
 
-- geline - stores the address of a  whole input line into a buffer with a pointer called `lineptr`.the buffere is terminated with a `NULL` character. 
+- geline - stores the address of a  whole input line into a buffer with a pointer called `lineptr`.the buffere is terminated with a `NULL` character.
+
+You can also pass a **string** as an argument , and we may need to split the string into different parameters. this can be done with the use of `strtok`. 
+
+**Strtok()**
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+/**
+ * splitstr - splits a str
+ * @str: the string it will split
+ * @delim: the delimiter that will be used to split the string
+ */
+char **splitstr(char *str, char *delim)
+{
+        char **array;
+        int count = 0;
+
+
+        array = (char **)malloc(10000);
+        array[count] = strtok(str, delim);
+
+        while (array[count] != NULL)
+        {
+                array[++count] = strtok(NULL, " ");
+        }
+        return (array);
+}
+
+
+/**
+ * main - the main function
+ * Return: always zero
+ */
+int main(void)
+{
+        char str[] = "hello I am about to split the string";
+        char **array;
+        int count = 0;
+
+        array = splitstr(str, " ");
+
+        while(array[count] != NULL)
+        {
+                printf("%s\n", array[count++]);
+        }
+        free(array);
+        return 0;
+}
+```
+## Executing a program
+
+

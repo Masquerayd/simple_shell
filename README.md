@@ -123,5 +123,28 @@ int main(void)
 }
 ```
 ## Executing a program
+The system call `execve` allows a process to execute another program (man 2 `evecve`). Note that this system call load a new program into the current system memory replacing the previous one. here is an example of how to call an execve function
+
+'''c
+#include <unistd.h>
+
+       int execve(const char *pathname, char *const _Nullable argv[],
+                  char *const _Nullable envp[]);
+'''
+
+here is a practical example of how to use the code 
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+                                            /**
+ * main - main execve example
+ * Returns: always 0                         */
+int main (void)
+{                                                   char *argv[] = {"/bin/ls", "-l" , "/root/simple_shell/ex", NULL};                                                                   printf("before execve\n");                  if (execve(argv[0],argv, NULL) == -1)                                                   {                                                   perror("Error:");
+        }
+        return (0);
+}
+```
 
 

@@ -137,14 +137,118 @@ here is a practical example of how to use the code
 ```c
 #include <stdio.h>
 #include <unistd.h>
-                                            /**
+/**
  * main - main execve example
- * Returns: always 0                         */
+ * Returns: always 0
+ */
 int main (void)
-{                                                   char *argv[] = {"/bin/ls", "-l" , "/root/simple_shell/ex", NULL};                                                                   printf("before execve\n");                  if (execve(argv[0],argv, NULL) == -1)                                                   {                                                   perror("Error:");
+{
+	char *argv[] = {"/bin/ls", "-l" , "/root/simple_shell/ex", NULL};
+	printf("before execve\n");
+	if (execve(argv[0],argv, NULL) == -1)
+	{
+		perror("Error:");
         }
         return (0);
 }
+```
+
+## Creating a New process
+
+The system call , called fork (man 2 `fork), creates a new process that is similar to the parent process.Once the `fork` system call returns , two processs continue to run from the same point , but the first process will be completed then the second one will start from that point which fork was called
+
+here is an example showing how the system call fork works
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+
+/**
+ * main - fork example
+ *
+ * Return: Always 0.
+ */
+int main(void)
+{
+    pid_t my_pid;
+    pid_t pid;
+
+    printf("Before fork\n");
+    pid = fork();
+    if (pid == -1)
+    {
+        perror("Error:");
+        return (1);
+    }
+    printf("After fork\n");
+    my_pid = getpid();
+    printf("My pid is %u\n", my_pid);
+    return (0);
+}
+```
+
+Output of code is 
+
+```
+julien@ubuntu:~/c/shell$ ./fork
+Before fork
+After fork
+My pid is 4819
+julien@ubuntu:~/c/shell$ After fork
+My pid is 4820
+```
+There is a simple way to check if the process running is the child or the father , we know that the child will return 0 , where as the father process will return the PID of the parent
+
+## Wait 
+
+The system call `wait` suspends the process o fthe calling process until, one of its child terminates. you can check (`man 2 wait`) for more info.
+
+the code below shows an example of how the parent process which runs first wait for the child process to execute then it runs the parent process
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+/**
+ * main - fork & wait example
+ *
+ * Return: Always 0.
+ */
+int main(void)
+{
+    pid_t child_pid;
+    int status;
+
+    child_pid = fork();
+    if (child_pid == -1)
+    {
+        perror("Error:");
+        return (1);
+    }
+    if (child_pid == 0)
+    {
+        printf("Wait for me, wait for me\n");
+        sleep(3);
+    }
+    else
+    {
+        wait(&status);
+        printf("Oh, it's all better now\n");
+    }
+    return (0);
+}
+```
+
+output of the code above
+
+```
+julien@ubuntu:~/c/shell$ gcc -Wall -Wextra -Werror -pedantic wait.c -o wait
+julien@ubuntu:~/c/shell$ ./wait
+Wait for me, wait for me
+Oh, it's all better now
+julien@ubuntu:~/c/shell$
 ```
 
 

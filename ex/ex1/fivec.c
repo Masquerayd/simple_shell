@@ -16,11 +16,11 @@ int main(void)
 	fpid = getpid();
 	cpid = getpid();
 
-	while (cpid <= fpid + 5)
+	while (cpid <= fpid + 2)
 	{
 		process = fork();
 		cpid = getpid();
-		if ( cpid > fpid + 5)
+		if ( cpid > fpid + 2)
 		{
 			wait(&status);
 		}

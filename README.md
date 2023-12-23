@@ -70,6 +70,39 @@ when working with shell a program sometimes needs an input from the user inorder
 
 - geline - stores the address of a  whole input line into a buffer with a pointer called `lineptr`.the buffere is terminated with a `NULL` character.
 
+the code for read a line and printing it is below
+
+```c
+#include "shell.h"
+
+/**
+ * shell - that will basically start a program and wait for a user input and act based on that
+ * Return: always 0;
+ */
+ssize_t shell(void)
+{
+        char *lineptr = NULL;
+        size_t size = 0;
+        ssize_t numchars;
+
+        while(1)
+        {
+                printf("$ ");
+                numchars = getline(&lineptr, &size, stdin);
+                if (numchars == -1)
+                {
+                        printf("error\n");
+                        free(lineptr);
+                        return (-1);
+                }
+                printf("your input is %s", lineptr);
+                lineptr = NULL;
+        }
+        free(lineptr);
+
+        return (numchars);
+}
+```
 You can also pass a **string** as an argument , and we may need to split the string into different parameters. this can be done with the use of `strtok`. 
 
 **Strtok()**

@@ -23,7 +23,7 @@ int checkcom(char **arg)
 	}
 	if (num == -1)
 	{
-		printf("Error from input arg\n");
+		printf("No such file  or directory\n");
 	}
 	return (count);
 }

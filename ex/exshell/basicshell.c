@@ -24,15 +24,9 @@ ssize_t shell(void)
 			return (-1);
 		}
 		array = splitstr(lineptr);
-/*		while (array[count] != NULL)
-		{
-			printf("%s\n", array[count]);
-			printf("-----\n");
-			count++;
-		}
-*/		lineptr = NULL;
-/*		count = 0;
-*/	}
+		checkcom(array);
+		lineptr = NULL;
+	}
 
 	return (numchars);
 }

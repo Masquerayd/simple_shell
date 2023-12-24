@@ -10,41 +10,30 @@
 int main(void)
 {
 	pid_t fpid, cpid;
-	pid_t process;
 	int status;
+	int count = 0;
+	char *argv[] = {"/bin/ls", "-l", "/tmp", NULL};
 
 	fpid = getpid();
-	cpid = getpid();
+	printf("fpid: %d\n", fpid);
 
-	while (cpid <= fpid + 2)
+	while (count < 5)
 	{
-		process = fork();
-		cpid = getpid();
-		if ( cpid > fpid + 2)
-		{
-			wait(&status);
-		}
-		
-	}
-
-	if (process == -1)
-	{
-		printf(" Fork process failed");
-	}
-	
-	if (process == 0)
-	{
-		cpid = getpid();
-		fpid = getppid();
-		printf("In child pid: %u and parent pid %u\n", cpid, fpid);
-
-	}
-	else
-	{
+		cpid = fork();
 		wait(&status);
-		printf("father process %u\n", fpid);
+		if (cpid == 0)
+		{
+			printf("cpid: %d\n", getpid());
+			execve(argv[0],argv,NULL);
+			count = 5;
+
+		}
+		count++;
 	}
-	printf("ending process: %u\n",cpid);
+	if( cpid != 0)
+	{
+		printf("code exited pid is : %d\n", getpid());
+	}
 
 	return (0);
 }

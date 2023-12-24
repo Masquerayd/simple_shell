@@ -156,7 +156,7 @@ int main(void)
 }
 ```
 ## Executing a program
-The system call `execve` allows a process to execute another program (man 2 `evecve`). Note that this system call load a new program into the current system memory replacing the previous one. here is an example of how to call an execve function
+The system call `execve` allows a process to execute another program (man 2 `evecve`). Note that this system call load a new program into the current system memory replacing the previous one. here is an example of how to call an execve function. Its better to start another child process and run the `execve` function through it, as it terminates the program or replaces it when it executes.
 
 '''c
 #include <unistd.h>
@@ -283,5 +283,54 @@ Wait for me, wait for me
 Oh, it's all better now
 julien@ubuntu:~/c/shell$
 ```
+## stat()
 
+This function returns information about a file, in the buffer pointed to by statbuf, If the file is found `stat` returns a 0. On error , -1 is returned.
 
+```c
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+/**
+ * main - stat example
+ *
+ * Return: Always 0.
+ */
+int main(int ac, char **av)
+{
+    unsigned int i;
+    struct stat st;
+
+    if (ac < 2)
+    {
+        printf("Usage: %s path_to_file ...\n", av[0]);
+        return (1);
+    }
+    i = 1;
+    while (av[i])
+    {
+        printf("%s:", av[i]);
+        if (stat(av[i], &st) == 0)
+        {
+            printf(" FOUND\n");
+        }
+        else
+        {
+            printf(" NOT FOUND\n");
+        }
+        i++;
+    }
+    return (0);
+}
+```
+The output
+
+```
+ubuntu:~/c/shell$ ./stat ls /bin/ls /usr/bin/ls
+ls: NOT FOUND
+/bin/ls: FOUND
+/usr/bin/ls: NOT FOUND
+ubuntu:~/c/shell$ 
+```

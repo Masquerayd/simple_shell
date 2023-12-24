@@ -1,21 +1,14 @@
-#ifndef SIM_SHELL_H
-
-#define SIM_SHELL_H
-
-#define SH_MAX_SIZE 1024
-#include <stdlib.h>
+#ifndef SHELL_H
+#define SHELL_H
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <stddef.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-int _sh_print(char const *chars);
-void _sh_prompt(void);
-void shell_printf(const char *shell_inputs);
-char *_getenv(const char *name);
-void cmd_prompt(void);
+ssize_t shell(void);
+char **splitstr(char *string);
+int checkcom(char **arg);
+
 #endif
-

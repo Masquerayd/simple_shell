@@ -2,7 +2,7 @@
 
 /**
  * splitstr - splits a string and puts it into an array
- * @str: The string that will be split 
+ * @string: The string that will be split
  * Return: The array that has the string in the array
  */
 char **splitstr(char *string)
@@ -14,7 +14,7 @@ char **splitstr(char *string)
 	array = (char **)malloc(10000);
 	stringb = strtok(string, "\n");
 	array[count] = strtok(stringb, " ");
-	while(array[count++] != NULL)
+	while (array[count++] != NULL)
 	{
 		array[count] = strtok(NULL, " ");
 	}

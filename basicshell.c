@@ -1,7 +1,8 @@
 #include "shell.h"
 
 /**
- * shell - that will basically start a program and wait for a user input and act based on that
+ * shell - that will basically start a program
+ * and wait for a user input and act based on that
  * Return: always 0;
  */
 ssize_t shell(void)
@@ -11,7 +12,7 @@ ssize_t shell(void)
 	ssize_t numchars;
 	char **array;
 
-	while(1)
+	while (1)
 	{
 		printf("$ ");
 		numchars = getline(&lineptr, &size, stdin);

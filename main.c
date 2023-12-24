@@ -1,15 +1,12 @@
 #include "shell.h"
 
 /**
- * main - Entry point of the program.
- *
- * Returns: Int.
+ * main - main function
+ * Return: alwyas 0
  */
-
 int main(void)
 {
-	while (0 < 1)
-	{
-		_sh_prompt();
-	}
+
+	shell();
+	return (0);
 }

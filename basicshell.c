@@ -19,7 +19,6 @@ ssize_t shell(void)
 		array = (char **)malloc(10000);
 		if (numchars == -1)
 		{
-			printf("The program closed\n");
 			free(lineptr);
 			free(array);
 			return (-1);
